@@ -12,17 +12,24 @@ let score = [0, 0], currentScore = 0, activePlayer = 0 , dice = 0;
 dice = Math.round(Math.random() * 5) + 1;
 
 let diceImg = document.querySelector('.dice');
+diceImg.style.display = 'none';
 
-// increment individual score
-function incrementScore() {
-    currentScore += dice;
-    document.getElementById('current-' + activePlayer).innerHTML = currentScore;
+// roll dice
+function turn() {
+    dice = Math.floor(Math.random() * 5) + 1;
+    console.log('Dice: ' + dice);
+    if (dice === 1) {
+        switchPlayer();
+    } else {
+        diceImg.style.display = 'block';
+        diceImg.setAttribute('src', 'dice-' + dice + '.png');
+        incrementScore();
+    }
 }
 
 // switch players
 function switchPlayer() {
-    diceImg.style.display = 'block';
-    diceImg.setAttribute('src', 'dice-1.png');
+    diceImg.style.display = 'none';
     score[activePlayer] += currentScore;
     currentScore = 0;
     document.getElementById('current-' + activePlayer).innerHTML = currentScore;
@@ -44,17 +51,10 @@ function switchPlayer() {
     }
 }
 
-// roll dice
-function turn() {
-    dice = Math.floor(Math.random() * 5) + 1;
-    console.log('Dice: ' + dice);
-    if (dice === 1) {
-        switchPlayer();
-    } else {
-        diceImg.style.display = 'block';
-        diceImg.setAttribute('src', 'dice-' + dice + '.png');
-        incrementScore();
-    }
+// increment individual score
+function incrementScore() {
+    currentScore += dice;
+    document.getElementById('current-' + activePlayer).innerHTML = currentScore;
 }
 
 document.querySelector('.btn-roll').addEventListener('click', function() {
